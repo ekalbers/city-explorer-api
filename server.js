@@ -21,16 +21,16 @@ let getForecast = (data) => {
     });
 };
 
-app.get('/', async (request, response) => {
+app.get('', async (request, response) => {
     response.status(200).send('use this api to get weather and movie information about a city');
 });
 
 
 app.get('/weather', async (request, response) => {
     let city = request.query;
-    console.log(city.length);
+    console.log(city.lat);
 
-    if (!request.query.length) {
+    if (!city.lat) {
         response.status(404).send('no lat or lon for test');
     } else {
         let proxy = {

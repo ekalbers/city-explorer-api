@@ -21,20 +21,28 @@ let getForecast = (data) => {
     });
 };
 
+app.get('/', async (request, response) => {
+    response.status(200).send('use this api to get weather and movie information about a city');
+});
+
 
 app.get('/weather', async (request, response) => {
     let city = request.query;
-    console.log(city);
+    console.log(city.length);
 
-    let proxy = {
-        url: `https://api.weatherbit.io/v2.0/forecast/daily?key=${REACT_APP_WEATHER_KEY}&days=${5}&lat=${city.lat}&lon=${city.lon}`,
-        method: 'GET'
-    };
-    let weatherForecast = await axios(proxy);
-    // console.log(weatherForecast.data);
-    console.log(weatherForecast.data.data);
-    let fiveDayForecast = getForecast(weatherForecast.data.data);
-    response.status(200).send(fiveDayForecast);
+    if (!request.query.length) {
+        response.status(404).send('no lat or lon for test');
+    } else {
+        let proxy = {
+            url: `https://api.weatherbit.io/v2.0/forecast/daily?key=${REACT_APP_WEATHER_KEY}&days=${5}&lat=${city.lat}&lon=${city.lon}`,
+            method: 'GET'
+        };
+        let weatherForecast = await axios(proxy);
+        // console.log(weatherForecast.data);
+        console.log(weatherForecast.data.data);
+        let fiveDayForecast = getForecast(weatherForecast.data.data);
+        response.status(200).send(fiveDayForecast);
+    }
 });
 
 app.get('/movies', async (request, response) => {

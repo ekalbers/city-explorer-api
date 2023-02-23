@@ -1,22 +1,22 @@
-Name of feature: 1. Set up your server repository.
+Name of feature: 1. Weather (live)
 
-Estimate of time needed to complete: 30 minutes
+Estimate of time needed to complete: 2 hours
 
-Start time: 11:05 pm pm
+Start time: 3:45 AM
 
-Finish time: 11:45 pm
+Finish time: 4:50
 
-Actual time needed to complete: 40 minutes
+Actual time needed to complete: 1 hour 5 minutes
 
-Name of feature: 2. Weather (placeholder): As a user of City Explorer, I want to see weather info for the city I searched, so that I know how to pack for an upcoming trip.
+Name of feature: 1. Weather (live)
 
-Estimate of time needed to complete: 2 hrs
+Estimate of time needed to complete: 2 hours
 
-Start time: 11:55 pm pm
+Start time: 5:20 AM
 
-Finish time: 2 am the next day
+Finish time: 4:50
 
-Actual time needed to complete: 24+ made a lot of really dumb mistakes
+Actual time needed to complete: 1 hour 5 minutes
 
 # city-explorer-api
 

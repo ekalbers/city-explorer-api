@@ -3,14 +3,15 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const weather = require('./weather.json');
 const app = express();
+const axios = require('axios');
 
 const PORT = process.env.PORT;
+const REACT_APP_WEATHER_KEY = process.env.REACT_APP_WEATHER_KEY;
 
 app.use(cors());
 
-class Forecast {
+/* class Forecast {
     constructor(city) {
         this.city = city.city;
         this.lat = city.lat;
@@ -43,19 +44,31 @@ class Forecast {
         });
         return forecast;
     }
-}
+} */
 
-app.get('/weather', (request, response) => {
+let getForecast = (data) => {
+    return data.map(item => {
+        return ({
+            'description': 'Low of ' + String(item.low_temp) + ', high of ' + String(item.high_temp) + ' with ' + item.weather.description,
+            'date': item.datetime
+        });
+    });
+};
+
+
+app.get('/weather', async (request, response) => {
     let city = request.query;
     console.log(city);
-    let weatherReport = new Forecast({ 'city': city.city, 'lat': Number(city.lat), 'lon': Number(city.lon) });
-    let index = weatherReport.cityIndex();
-    if (!(index + 1)) {
-        response.status(404).send('No weather data found for this city.');
-    } else {
-        let report = weatherReport.threeDayForecast(index);
-        response.status(200).send(report);
-    }
+
+    let proxy = {
+        url: `https://api.weatherbit.io/v2.0/forecast/daily?key=${REACT_APP_WEATHER_KEY}&days=${5}&lat=${city.lat}&lon=${city.lon}`,
+        method: 'GET'
+    };
+    let weatherForecast = await axios(proxy);
+    // console.log(weatherForecast.data);
+    console.log(weatherForecast.data.data);
+    let fiveDayForecast = getForecast(weatherForecast.data.data);
+    response.status(200).send(fiveDayForecast);
 });
 
 app.listen(PORT, () => {

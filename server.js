@@ -1,9 +1,12 @@
 'use strict';
 
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const weather = require('./weather.json');
 const app = express();
+
+const PORT = process.env.PORT;
 
 app.use(cors());
 
@@ -14,10 +17,12 @@ class Forecast {
         this.lon = city.lon;
     }
 
-    static cityIndex() {
+    cityIndex() {
         let x = 0;
-        let index = 0;
+        let index = -1;
         weather.forEach(item => {
+            console.log('this lat: ' + this.lat + ', item lat: ' + item.lat);
+            console.log('this lon: ' + this.lon + ', item lon: ' + item.lon);
             if (this.lat === item.lat && this.lon === item.lon) {
                 index = x;
             }
@@ -26,8 +31,8 @@ class Forecast {
         return index;
     }
 
-    threeDayForecast() {
-        let index = Forecast.cityIndex();
+    threeDayForecast(index) {
+        console.log(index);
         console.log(weather[index]);
         let arr = weather[index].data;
         let forecast = arr.map(item => {
@@ -44,12 +49,16 @@ app.get('/weather', (request, response) => {
     let city = request.query;
     console.log(city);
     let weatherReport = new Forecast({ 'city': city.city, 'lat': Number(city.lat), 'lon': Number(city.lon) });
-    response.send(weatherReport.threeDayForecast());
-    response.status(200);
-    console.log(weatherReport.threeDayForecast());
+    let index = weatherReport.cityIndex();
+    if (!(index + 1)) {
+        response.status(404).send('no city found');
+    } else {
+        let report = weatherReport.threeDayForecast(index);
+        response.status(200).send(report);
+    }
 });
 
-app.listen(3001, () => {
+app.listen(PORT, () => {
     console.log('app is running');
 });
 

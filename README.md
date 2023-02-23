@@ -14,9 +14,9 @@ Estimate of time needed to complete: 2 hrs
 
 Start time: 11:55 pm pm
 
-Finish time: _______________
+Finish time: 2 am the next day
 
-Actual time needed to complete: _____________
+Actual time needed to complete: 24+ made a lot of really dumb mistakes
 
 # city-explorer-api
 

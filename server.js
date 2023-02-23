@@ -51,7 +51,7 @@ app.get('/weather', (request, response) => {
     let weatherReport = new Forecast({ 'city': city.city, 'lat': Number(city.lat), 'lon': Number(city.lon) });
     let index = weatherReport.cityIndex();
     if (!(index + 1)) {
-        response.status(404).send('no city found');
+        response.status(404).send('No weather data found for this city.');
     } else {
         let report = weatherReport.threeDayForecast(index);
         response.status(200).send(report);

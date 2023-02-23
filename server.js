@@ -22,8 +22,9 @@ let getForecast = (data) => {
 };
 
 let getMovies = (data) => {
-    let x = 1;
+    let x = 0;
     return data.map(item => {
+        x++;
         return ({
             'key': x,
             'Title': item.title,
@@ -66,6 +67,7 @@ app.get('/movies', async (request, response) => {
     };
 
     let movieData = await axios(proxy);
+    console.log(proxy);
     if (movieData.total_results === 0) {
         response.status(404).send('Error: No movies found');
     } else {

@@ -21,6 +21,17 @@ let getForecast = (data) => {
     });
 };
 
+let getMovies = (data) => {
+    let x = 1;
+    return data.map(item => {
+        return ({
+            'key': x,
+            'Title': item.title,
+            'Overview': item.overview
+        });
+    });
+};
+
 app.get('', async (request, response) => {
     response.status(200).send('use this api to get weather and movie information about a city');
 });
@@ -54,12 +65,13 @@ app.get('/movies', async (request, response) => {
         method: 'GET'
     };
 
-    let movies = await axios(proxy);
-    if (movies.total_results === 0) {
+    let movieData = await axios(proxy);
+    if (movieData.total_results === 0) {
         response.status(404).send('Error: No movies found');
     } else {
-        console.log(movies.data);
-        response.status(200).send(movies.data.results);
+        console.log(movieData.data);
+        let movies = getMovies(movieData.data.results);
+        response.status(200).send(movies);
     }
 });
 

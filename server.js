@@ -5,6 +5,8 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const axios = require('axios');
+const getForecast = require('./weather');
+const getMovies = require('./movies.js');
 
 const PORT = process.env.PORT;
 const REACT_APP_WEATHER_KEY = process.env.REACT_APP_WEATHER_KEY;
@@ -12,7 +14,7 @@ const REACT_APP_MOVIE_KEY = process.env.REACT_APP_MOVIE_KEY;
 
 app.use(cors());
 
-let getForecast = (data) => {
+/* let getForecast = (data) => {
     return data.map(item => {
         return ({
             'description': 'Low of ' + String(item.low_temp) + ', high of ' + String(item.high_temp) + ' with ' + item.weather.description,
@@ -31,7 +33,7 @@ let getMovies = (data) => {
             'Overview': item.overview
         });
     });
-};
+}; */
 
 app.get('', async (request, response) => {
     response.status(200).send('use this api to get weather and movie information about a city');
